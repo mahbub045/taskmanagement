@@ -51,12 +51,24 @@ function Register() {
         setErrors(newErrors);
 
         if (!newErrors.fullName && !newErrors.email && !newErrors.password && !newErrors.confirmPassword) {
-            localStorage.setItem('fullName', formData.fullName);
-            localStorage.setItem('email', formData.email);
-            localStorage.setItem('password', formData.password);
+            // Get existing data from local storage or initialize an empty array
+            const existingData = JSON.parse(localStorage.getItem('users')) || [];
+
+            // Add the new user data to the array
+            existingData.push({
+                fullName: formData.fullName,
+                email: formData.email,
+                password: formData.password
+            });
+
+            // Store the updated array back in local storage
+            localStorage.setItem('users', JSON.stringify(existingData));
+
             alert('Registration successful!');
             setRegistered(true); // Set registered to true after successful registration
         }
+
+
     };
 
     if (registered) {

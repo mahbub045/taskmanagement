@@ -1,8 +1,9 @@
-import React from 'react';
-
 const Layout = ({ children }) => {
-    // Retrieve username from local storage
-    const username = localStorage.getItem('fullName');
+    // Retrieve users data from local storage
+    const usersData = JSON.parse(localStorage.getItem('users'));
+
+    // Retrieve username from the first user in the array (assuming it's an array)
+    const username = usersData && usersData.length > 0 ? usersData[0].fullName : null;
 
     return (
         <div className='flex flex-col justify-between min-h-screen'>
@@ -17,7 +18,7 @@ const Layout = ({ children }) => {
                     </div>
                 </nav>
             </header>
-            <main className='px-4 m-auto mt-4'>
+            <main className='px-4'>
                 {children}
             </main>
             <footer className='flex justify-center items-center shadow-inner h-10'>
@@ -25,6 +26,6 @@ const Layout = ({ children }) => {
             </footer>
         </div>
     )
-}
+};
 
 export default Layout;

@@ -5,6 +5,7 @@ import EditProfile from './pages/EditProfile';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Register from './pages/Register';
+import TaskForm from './pages/TaskForm';
 import LoginPage from './pages/login';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/edit-profile" element={<EditProfile />} />
+        <Route path="/create-task" element={<TaskForm />} />
       </Routes>
     </Router>
   );

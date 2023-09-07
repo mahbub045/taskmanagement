@@ -12,7 +12,9 @@ function LoginPage() {
         password: '',
     });
 
+    const [loginError, setLoginError] = useState(''); // New state for login error
     const navigate = useNavigate();
+
     useEffect(() => {
         // Retrieve data from local storage (assuming you've set it during registration)
         const storedEmail = localStorage.getItem('email');
@@ -39,6 +41,7 @@ function LoginPage() {
         e.preventDefault();
 
         let newErrors = { email: '', password: '' };
+        setLoginError('');
 
         if (!formData.email) {
             newErrors.email = 'Email is required';
@@ -51,16 +54,22 @@ function LoginPage() {
         setErrors(newErrors);
 
         if (!newErrors.email && !newErrors.password) {
-            // Check if email and password match stored values
-            const storedEmail = localStorage.getItem('email');
-            const storedPassword = localStorage.getItem('password');
+            // Retrieve users data from local storage
+            const storedUsers = JSON.parse(localStorage.getItem('users'));
 
-            if (formData.email === storedEmail && formData.password === storedPassword) {
-                console.log('Login successful!');
-                // Redirect to home page
-                navigate('/home');
+            if (storedUsers) {
+                // Check if there are any users stored
+                const user = storedUsers.find(user => user.email === formData.email && user.password === formData.password);
+
+                if (user) {
+                    console.log('Login successful!');
+                    // Redirect to home page
+                    navigate('/home');
+                } else {
+                    setLoginError('Invalid email or password');
+                }
             } else {
-                console.log('Invalid email or password');
+                setLoginError('No users registered');
             }
         }
     };
@@ -106,8 +115,11 @@ function LoginPage() {
                             Login
                         </button>
                     </form>
+                    {loginError && (
+                        <p className="text-red-500 text-sm mt-2">{loginError}</p>
+                    )}
                     <p className="mt-4 text-gray-600 text-center">
-                        Don&apos;t have an Account?{' '}
+                        Don't have an Account?{' '}
                         <a href="/register" className="text-green-500 hover:underline">
                             Register Here
                         </a>
@@ -116,5 +128,6 @@ function LoginPage() {
             </div>
         </div>
     );
-};
+}
+
 export default LoginPage;
