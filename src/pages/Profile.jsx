@@ -11,6 +11,8 @@ const Profile = () => {
         // Add more team members as needed
     ]);
 
+    const [selectedSortOption, setSelectedSortOption] = useState('Priority'); // Default is Priority
+
     const assignTask = (taskId, selectedMember) => {
         const updatedTasks = tasks.map((task, index) => {
             if (index === taskId) {
@@ -26,9 +28,27 @@ const Profile = () => {
     useEffect(() => {
         const storedTasks = JSON.parse(localStorage.getItem('tasks'));
         if (storedTasks) {
-            setTasks(storedTasks);
+            const priorityMap = {
+                'Low': 1,
+                'Medium': 2,
+                'High': 3
+            };
+
+            const sortedTasks = storedTasks.sort((a, b) => {
+                if (selectedSortOption === 'Priority') {
+                    return priorityMap[b.priority] - priorityMap[a.priority];
+                } else if (selectedSortOption === 'DueDate') {
+                    return new Date(a.dueDate) - new Date(b.dueDate);
+                }
+                return 0;
+            });
+            setTasks(sortedTasks);
         }
-    }, []);
+    }, [selectedSortOption]);
+
+    const handleSortOptionChange = (option) => {
+        setSelectedSortOption(option);
+    };
 
     // Retrieve profile data from local storage
     const profilePicture = localStorage.getItem('profilePicture');
@@ -59,6 +79,16 @@ const Profile = () => {
                     <div className="flex flex-col mt-8 ml-4">
                         <h2 className="text-2xl font-bold text-green-800">Tasks</h2>
                         <a href="/create-task" className='ml-auto mb-2 text-green-500 hover:underline text-xl font-bold'>+Create Task</a>
+                    </div>
+                    <div className="flex justify-center mb-4">
+                        <label className="mr-2">Sort by:</label>
+                        <select
+                            value={selectedSortOption}
+                            onChange={(e) => handleSortOptionChange(e.target.value)}
+                        >
+                            <option value="Priority">Priority</option>
+                            <option value="DueDate">Due Date</option>
+                        </select>
                     </div>
                     <table className="w-full border border-collapse">
                         <thead>

@@ -18,6 +18,7 @@ const AssignTask = ({ teamMembers, assignTask }) => {
                 id="assignee"
                 value={selectedMember}
                 onChange={(e) => setSelectedMember(e.target.value)}
+                className='border ml-2 border-green-400 cursor-pointer'
             >
                 <option value="">Select a team member</option>
                 {teamMembers.map((member) => (
