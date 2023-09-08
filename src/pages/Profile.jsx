@@ -1,8 +1,27 @@
 import React, { useEffect, useState } from 'react';
+import AssignTask from '../components/AssignTask';
 import Layout from '../components/Layout';
 
 const Profile = () => {
     const [tasks, setTasks] = useState([]);
+    const [teamMembers] = useState([ // Sample team members data
+        { id: 1, name: 'Rahim Mandal' },
+        { id: 2, name: 'Karim Mandal' },
+        { id: 3, name: 'Asif Ali' },
+        // Add more team members as needed
+    ]);
+
+    const assignTask = (taskId, selectedMember) => {
+        const updatedTasks = tasks.map((task, index) => {
+            if (index === taskId) {
+                return { ...task, assignedTo: selectedMember };
+            }
+            return task;
+        });
+
+        setTasks(updatedTasks);
+        localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+    };
 
     useEffect(() => {
         const storedTasks = JSON.parse(localStorage.getItem('tasks'));
@@ -48,6 +67,7 @@ const Profile = () => {
                                 <th className="border border-green-300 p-2">Description</th>
                                 <th className="border border-green-300 p-2">Due Date</th>
                                 <th className="border border-green-300 p-2">Priority</th>
+                                <th className="border border-green-300 p-2">Assigned To</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -57,11 +77,16 @@ const Profile = () => {
                                     <td className="border border-green-300 p-2">{task.description}</td>
                                     <td className="border border-green-300 p-2">{task.dueDate}</td>
                                     <td className="border border-green-300 p-2">{task.priority}</td>
+                                    <td className="border border-green-300 p-2 flex flex-col items-center">
+                                        {task.assignedTo ? task.assignedTo : "Not Assigned"}
+                                        <AssignTask teamMembers={teamMembers} assignTask={assignTask} />
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div>
+
             </Layout>
         </div>
     );

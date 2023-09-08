@@ -14,8 +14,8 @@ const Home = () => {
         <>
             <Layout>
                 <div className="mt-8">
-                    <div className="flex flex-col mt-8 ml-4">
-                        <h2 className="text-2xl font-bold text-green-800">Tasks</h2>
+                    <div className="flex flex-col mb-2 ml-4">
+                        <h2 className="text-2xl font-bold text-green-800">All Tasks</h2>
                     </div>
                     <table className="w-full border border-collapse">
                         <thead>

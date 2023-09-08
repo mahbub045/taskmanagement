@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
+import AssignTask from './components/AssignTask';
 import EditProfile from './pages/EditProfile';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
@@ -18,6 +19,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/edit-profile" element={<EditProfile />} />
         <Route path="/create-task" element={<TaskForm />} />
+        <Route path="/assign-task" element={<AssignTask />} />
       </Routes>
     </Router>
   );
