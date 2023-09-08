@@ -41,12 +41,15 @@ const EditProfile = () => {
         <div>
             <Layout>
                 <div className="flex flex-col items-center mt-8">
-                    <input type="file" accept="image/*" onChange={handlePictureChange} className='border border-green-500 focus:outline-none w-96 text-green-600' />
+                    <label className='font-bold text-green-600 pt-5' id="img" >Add Profile Picture</label>
+                    <input id='img' type="file" accept="image/*" onChange={handlePictureChange} className='border border-green-500 focus:outline-none w-96 text-green-600' />
                     {profilePicture && (
                         <img src={profilePicture} alt="Profile" className="w-32 h-32  rounded-full mb-4 p-2" />
                     )}
-                    <div className='py-3'>
+                    <label className='font-bold text-green-600 pt-5' id='bio'>Add bio</label>
+                    <div className='pb-3'>
                         <textarea
+                            id='bio'
                             value={bio}
                             onChange={handleBioChange}
                             placeholder="Enter your bio"
